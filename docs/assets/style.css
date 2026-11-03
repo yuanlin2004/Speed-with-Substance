@@ -8,3 +8,5 @@
 @media print{body{background:#fff;font-size:10pt}.masthead,aside,.skip,footer{display:none}.hero{padding:0}.hero h1{font-size:36pt}.article-layout{display:block;padding:0;margin-top:30px}article section{margin-bottom:20px;padding-bottom:20px}h2{font-size:24pt}h3{break-after:avoid}.thesis,.flip-figure,.equation,.report-card{break-inside:avoid}.thesis{background:#fff;color:#000;border:1px solid #888}.thesis .label{color:#000}.table-wrap{overflow:visible}table{min-width:0}a{color:#000}.decision-grid{grid-template-columns:repeat(3,1fr)}}
 
 .comparison-four{grid-template-columns:repeat(2,minmax(0,1fr))}
+
+.byline{font-size:13px;color:var(--muted);margin:0 0 18px}
