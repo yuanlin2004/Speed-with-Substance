@@ -8,7 +8,7 @@ The proposal combines numerical fidelity, paired task outcomes, context and serv
 
 ## Status
 
-Methodology proposal v1.1, November 3, 2026. No hardware benchmark results are claimed. Suggested thresholds and budgets are explicitly illustrative. This repository contains the article, not an implemented evaluation harness.
+Methodology proposal v1.2, November 3, 2026. No hardware benchmark results are claimed. Suggested thresholds and budgets are explicitly illustrative. This repository contains the article, not an implemented evaluation harness.
 
 ## Edit and preview
 
@@ -29,6 +29,10 @@ Open http://localhost:8000. Google Fonts are optional; the page uses local syste
 ## Publishing
 
 Select **Settings → Pages → Source → GitHub Actions** once. Pushing article changes to `main` runs the publishing workflow. The deployed artifact contains only `docs/`.
+
+## Revision 1.2
+
+Makes batching part of the quality claim, distinguishes client concurrency from actual execution batch size, and adds matched reference/candidate testing across batch composition, order, and serving-load regimes.
 
 ## Revision 1.1
 
