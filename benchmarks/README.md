@@ -42,3 +42,9 @@ python tools/run_benchmark.py --manifest /path/to/package/run.json --output /pat
 Publish the exact command and manifest with the result. Keep credentials in environment variables, not command arguments, manifests, or public logs. Inspect artifacts for secrets before publishing. The wrapper records driver information on the host where it runs; if the endpoint runs on a separate Spark, the package must collect that Spark's environment separately. Its wall time includes command and scorer overhead and is **not** a serving latency or goodput measurement.
 
 The wrapper has not been validated against a Spark benchmark run. No example result or synthetic leaderboard entry is included.
+
+## Failed and inconclusive evaluations
+
+Publish verified failed and inconclusive evaluations on the unranked board, with the same four versioned identities and reproducibility requirements as passing results. Include the decision rule, affected task/load slice, observed gate results, paired counts and confidence bounds where available, error logs, completed test coverage, and wall-clock cost. Explain missing evidence and what would resolve an inconclusive result.
+
+Record execution status separately from quality status. An incomplete run or resource error does not establish a quality regression unless it violates a declared critical gate. Preserve valid partial measurements and label unavailable fields explicitly; do not invent zero values or infer goodput. Any measured speed is diagnostic and does not confer ranking eligibility. Link retests to earlier immutable records and document corrections rather than silently replacing unfavorable results.

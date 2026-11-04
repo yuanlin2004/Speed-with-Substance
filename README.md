@@ -8,7 +8,7 @@ The proposal combines numerical fidelity, paired task outcomes, context and serv
 
 **Results board:** https://yuanlin2004.github.io/Speed-with-Substance/results.html
 
-The board is intentionally empty. It will contain only recipes we test and verify ourselves; experiments remain on hold. There is no submission flow.
+Both boards are intentionally empty: a leaderboard for passing recipes and an unranked failed/inconclusive board that preserves decisions, reasons, and evidence. They will contain only recipes we test and verify ourselves; experiments remain on hold. There is no submission flow.
 
 ## Status
 
