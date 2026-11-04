@@ -12,7 +12,7 @@ The board is intentionally empty. It will contain only recipes we test and verif
 
 ## Status
 
-Methodology proposal v1.8, November 3, 2026. No hardware benchmark results are claimed. Suggested thresholds and budgets are explicitly illustrative. This repository contains the article, not an implemented evaluation harness.
+Methodology proposal v1.9, November 3, 2026. No hardware benchmark results are claimed. Suggested thresholds and budgets are explicitly illustrative. This repository contains the article, a reference utility, and a benchmark-command wrapper. Actual benchmark packages will accompany future measured results.
 
 ## Edit and preview
 
@@ -35,11 +35,11 @@ Open http://localhost:8000. Google Fonts are optional; the page uses local syste
 
 Select **Settings → Pages → Source → GitHub Actions** once. Pushing article changes to `main` runs the publishing workflow. The deployed artifact contains only `docs/`.
 
-## Revision 1.8
+## Revision 1.9
 
-Evaluates supplied recipes as delivered. Records the artifacts, software, and execution settings needed to reproduce the test; recipe construction, calibration, and tuning are outside scope. Section 3 covers the reference and recipe; evaluation methods and acceptance rules are in Sections 4 and 5. Experiments and worked examples remain deferred.
+Defines the four versioned records required for each result: reference, supplied recipe, environment (including driver version), and benchmark. Each future result must publish a runnable benchmark package and evidence so others can verify it. Experiments and worked examples remain deferred.
 
-See `tools/reference.py` and `tools/README.md` for the original-precision baseline utility.
+See `benchmarks/README.md` for the package contract, `tools/run_benchmark.py` for command execution and recording, and `tools/reference.py` for reference generation. The wrapper does not implement scoring or provide a benchmark dataset.
 
 ## Research scope
 
