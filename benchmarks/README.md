@@ -13,6 +13,20 @@ Every published result must link to a package at an immutable commit or release.
 
 The benchmark version identifies the **entire test contract**, not just the dataset. Changing a prompt, sample subset, scorer, decoding budget, load schedule, or decision rule requires a new version. Preserve old versions so old results can be checked. Do not compare ranks across incompatible benchmark versions.
 
+## Speed suite
+
+The same versioned benchmark package must include a dedicated speed suite alongside quality evaluation:
+
+- Controlled input/output-length tests, representative prompt replay, and scored quality-under-load runs, labeled separately.
+- Short-interaction, generation-heavy, long-context, and mixed profiles, with exact lengths/distributions, IDs, budgets, counts, seeds, and cache state.
+- Concurrency sweeps through 1/2/4/8/16/32 where feasible, and a separately labeled fixed-arrival-schedule replay. Preregister stop conditions and retain failed operating points.
+- A pinned load generator with timing boundaries, token-versus-chunk timing semantics, warm-up exclusions, request timeouts, and workload drain policy.
+- Per-request TTFT, decode ms/token, end-to-end latency, counts and stop reasons; aggregate output tok/s and completions/s over declared wall time; resource/startup costs and independent-run variation.
+- Actual scored responses and SLO decisions to recompute goodput. Never estimate it by multiplying throughput by accuracy from another run. Publish SLO-compliant throughput when correctness is ungraded.
+- Scripts and commands to reproduce all tables, confidence summaries, and quality decisions. Preserve the raw traces and error records. Pair aggregate tok/s with per-stream ms/token; their values are not reciprocals.
+
+The SSD reference is a quality baseline, not a serving-speed baseline. Rank only matching workloads and latency limits. The current wrapper launches external benchmark commands; a streaming load generator and metric implementation must accompany each measured result. No speed experiments have been performed.
+
 ## Execution wrapper
 
 `tools/run_benchmark.py` runs the package's pinned commands sequentially, checks specified input hashes, and archives the manifest, command logs, actual driver query, runner hash, and step exit codes. It does not implement benchmark scoring or convert successful command execution into a quality pass. Official benchmark harnesses and their output adapters must be provided/pinned by each package.
