@@ -17,7 +17,7 @@
 <h1>Faster is a number.<br><em>Better needs evidence.</em></h1>
 <p class="dek">A practical standard for measuring what quantization and inference optimization preserve—and what they quietly change—on a single DGX Spark.</p>
 
-<div class="meta"><span>November 3, 2026</span><span>Methodology proposal · v1.7</span><span>No hardware results claimed</span></div>
+<div class="meta"><span>November 3, 2026</span><span>Methodology proposal · v1.8</span><span>No hardware results claimed</span></div>
 <div class="thesis"><span class="label">TL;DR</span><ol><li>Qualify quality first; rank passing recipes by goodput.</li><li>Goodput means correct, valid responses meeting latency limits per second.</li><li>Compare against a frozen original-precision reference, SSD-offloaded if necessary.</li><li>Test the model, context, batch composition, and load you intend to serve.</li><li>Inconclusive ≠ pass. Report uncertainty and the time required to obtain it.</li></ol></div>
 </section>
 <div class="article-layout">
@@ -70,9 +70,7 @@
 <p><strong>Compare the deployed recipe with the original-precision reference.</strong> Use the same evaluation inputs, prompt formatting, scoring rules, and generation policy for both, except for an explicitly declared recipe change under test. The reference may use another trusted implementation and SSD offload; the candidate engine need not support its precision. Record hardware, workload, and evaluator versions alongside the recipe so readers know where the result applies. A different prompt or scoring protocol is a different evaluation, not evidence of a recipe improvement.</p>
 <p>Report the candidate-minus-reference difference as the <em>complete recipe’s effect</em>. That comparison measures overall preservation; it does not isolate which ingredient caused a change. The release decision applies to the final recipe, including interactions between quantization, kernels, caches, compilation, and decoding.</p>
 
-<h3>3.3 Choose the correctness gates</h3>
-<p><strong>Computation-preserving changes</strong>, such as kernel fusion or cache management, need functional and operation-level numerical correctness checks against the intended computation. Calibrate absolute and relative error tolerances by operation, dtype, scale, and shape; require exact agreement for discrete bookkeeping such as request ownership and cache indices. Floating-point reassociation may preclude bitwise identity.</p>
-<p><strong>Approximate changes</strong>, such as quantization or deliberately approximate attention, additionally need task-level preservation evidence. A useful benchmark score does not excuse a known implementation bug. A correct implementation of an approximate algorithm does not establish acceptable model quality.</p></section>
+</section>
 <section id="layers"><div class="section-number">04 / THE PROPOSED PROTOCOL</div><h2>4. Four layers of evidence</h2>
 <div class="layer"><span class="layer-tag">L1</span><div><h3>4.1 Numerical fidelity</h3><p>Did the probability distribution change?</p></div></div>
 <p>Start below the logits: compare kernel and layer outputs using RMS, maximum absolute error, and relative error with a defined denominator floor. Include extreme values, noncontiguous layouts where supported, odd shapes, and relevant context/batch sizes. Locate the first divergent layer before interpreting end-to-end quality. Tail error is a diagnostic signal, not by itself proof of a user-visible failure.</p>
@@ -161,7 +159,7 @@
 <li><strong>Decision table:</strong> one row per recipe revision and required slice, with pass/fail/inconclusive/unmeasured status. Show raw speed for failures only as clearly unqualified results.</li></ul>
 <p>Plot quality-qualified goodput against memory or latency, retaining only points that pass the required gates. Show accuracy deltas and harmful-flip rates alongside the plot. If one candidate is faster but uses more memory, present the trade-off rather than hiding it inside a weighted “overall score.”</p>
 <div class="closing"><p>The optimization target is not the fastest stream of tokens. It is <em>the most useful work this machine can deliver within a declared quality and latency budget.</em></p><p>On one DGX Spark, that is measurable—if the reference, the workload, the uncertainty, and the limits of the claim are part of the result.</p></div>
-<p class="status-note"><strong>Revision 1.7:</strong> narrowed the protocol to evaluating supplied recipes. Removed recipe-construction and tuning requirements; the manifest records the artifacts, software, and settings required to reproduce execution.</p>
+<p class="status-note"><strong>Revision 1.8:</strong> removed the correctness-gate selection subsection from Section 3. The protocol evaluates supplied recipes; evaluation methods and acceptance rules are described in Sections 4 and 5.</p>
 <p class="status-note"><strong>Publication status:</strong> methodology proposal. No DGX Spark experiments were performed for this article, no acceptance thresholds have been empirically calibrated, and no performance gains are claimed. An SSD-offload reference utility is included; experiments and worked examples are deferred.</p>
 </section>
 <section id="sources" class="sources"><div class="section-number">READING & REPRODUCIBILITY</div><h2>8. Sources & further reading</h2><p>Sources consulted November 3, 2026. Living repositories and policies can change; pin their commit IDs in an actual experiment. Links below support the established practices; the SWS protocol and example gates are the proposal of this article.</p>
