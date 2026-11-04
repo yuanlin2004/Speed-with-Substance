@@ -8,7 +8,7 @@ The proposal combines numerical fidelity, paired task outcomes, context and serv
 
 ## Status
 
-Methodology proposal v1.2, November 3, 2026. No hardware benchmark results are claimed. Suggested thresholds and budgets are explicitly illustrative. This repository contains the article, not an implemented evaluation harness.
+Methodology proposal v1.3, November 3, 2026. No hardware benchmark results are claimed. Suggested thresholds and budgets are explicitly illustrative. This repository contains the article, not an implemented evaluation harness.
 
 ## Edit and preview
 
@@ -30,13 +30,11 @@ Open http://localhost:8000. Google Fonts are optional; the page uses local syste
 
 Select **Settings → Pages → Source → GitHub Actions** once. Pushing article changes to `main` runs the publishing workflow. The deployed artifact contains only `docs/`.
 
-## Revision 1.2
+## Revision 1.3
 
-Makes batching part of the quality claim, distinguishes client concurrency from actual execution batch size, and adds matched reference/candidate testing across batch composition, order, and serving-load regimes.
+Aligns navigation and numbered subsections, widens scope to large on-Spark candidates, adds SSD-offload reference generation and time budgets, and expands serving tests through concurrency 32. Experiments and worked examples are deferred.
 
-## Revision 1.1
-
-Adds a matched quantized reference, operation-level and architecture-specific correctness probes, modern reasoning/coding evaluation, and explicit boundaries for external judges and user simulators. Retains paired non-inferiority gates and adds current NVIDIA Model Optimizer, NeMo Evaluator, and vLLM references.
+See `tools/reference.py` and `tools/README.md` for the original-precision baseline utility.
 
 ## Research scope
 
