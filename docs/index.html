@@ -17,7 +17,7 @@
 <h1>Faster is a number.<br><em>Better needs evidence.</em></h1>
 <p class="dek">A practical standard for measuring what quantization and inference optimization preserve—and what they quietly change—on a single DGX Spark.</p>
 
-<div class="meta"><span>November 3, 2026</span><span>Methodology proposal · v1.9</span><span>No hardware results claimed</span></div>
+<div class="meta"><span>November 3, 2026</span><span>Methodology proposal · v1.10</span><span>No hardware results claimed</span></div>
 <div class="thesis"><span class="label">TL;DR</span><ol><li>Qualify quality first; rank passing recipes by goodput.</li><li>Goodput means correct, valid responses meeting latency limits per second.</li><li>Compare against a frozen original-precision reference, SSD-offloaded if necessary.</li><li>Test the model, context, batch composition, and load you intend to serve.</li><li>Inconclusive ≠ pass. Report uncertainty and the time required to obtain it.</li></ol></div>
 </section>
 <div class="article-layout">
@@ -54,6 +54,14 @@
 <p>Before running, record an affordable budget for screening, reference generation, and final confirmation. For example, an operator might allocate one hour for screening and an overnight window for reference generation; these are planning choices, not promised runtimes. Cache immutable reference artifacts so this cost is paid once per protocol revision. If a required confidence bound cannot be established within the budget, narrow the claim or report inconclusive.</p>
 <p>If an original-precision run is unavailable or unaffordable, report preservation as <strong>unmeasured</strong>; the recipe cannot qualify for an original-precision preservation claim. Obtain the reference artifacts before making that claim. Comparing a larger quantized model with a smaller resident model answers a deployment-choice question, not quantization loss.</p></section>
 <section id="reference"><div class="section-number">03 / EXPERIMENTAL CONTROL</div><h2>3. Define the test record</h2>
+
+<figure class="method-diagram" aria-labelledby="record-diagram-caption">
+<div class="figure-label">THE TEST RECORD</div>
+<div class="record-nodes"><div><span>01</span><strong>Reference</strong><small>Original checkpoint<br>Frozen outputs</small></div><div><span>02</span><strong>Recipe</strong><small>Supplied artifacts<br>Execution settings</small></div><div><span>03</span><strong>Environment</strong><small>Spark + driver<br>System software</small></div><div><span>04</span><strong>Benchmark</strong><small>Data + prompts<br>Scorer + load</small></div></div>
+<div class="diagram-join" aria-hidden="true">↓</div>
+<div class="diagram-result"><strong>One reproducible result</strong><span>Four immutable versions + evidence + rerun commands</span></div>
+<figcaption id="record-diagram-caption">A score belongs to this complete test record. Change any of its four versions and identify the new run separately.</figcaption>
+</figure>
 <h3>3.1 Record the reference</h3>
 <p>Use the <strong>original released checkpoint in its native high precision</strong>, typically BF16 or FP16, through a trusted implementation as the reference. BF16 is an engineering baseline, not mathematical ground truth. If the model was released only in a quantized format, name that limitation; do not call a dequantized copy an original BF16 reference.</p>
 <p>Before testing an optimization, repeat the reference and establish its own variability across process restarts and batch shapes. Greedy decoding reduces sampling variance, but floating-point reductions and near-tied logits can still change tokens. Do not require bitwise identity across unrelated kernels as a universal acceptance criterion.</p>
@@ -81,6 +89,19 @@
 
 </section>
 <section id="layers"><div class="section-number">04 / THE PROPOSED PROTOCOL</div><h2>4. Four layers of evidence</h2>
+
+<figure class="method-diagram" aria-labelledby="flow-diagram-caption">
+<div class="figure-label">FROM EXECUTION TO EVIDENCE</div>
+<div class="flow-inputs"><div><strong>Reference</strong><span>Trusted implementation<br>SSD offload if needed</span></div><div><strong>Candidate recipe</strong><span>Supplied recipe<br>Running on one Spark</span></div></div>
+<div class="diagram-join" aria-hidden="true">↓ &nbsp; &nbsp; ↓</div>
+<div class="flow-step"><strong>Run the same versioned benchmark</strong><span>Matched inputs, generation policy, and scoring</span></div>
+<div class="diagram-join" aria-hidden="true">↓</div>
+<div class="flow-evidence"><div><b>L1</b><span>Numerical<br>fidelity</span></div><div><b>L2</b><span>Paired task<br>outcomes</span></div><div><b>L3</b><span>Serving<br>correctness</span></div></div>
+<div class="diagram-join" aria-hidden="true">↓</div>
+<div class="flow-step flow-gate"><strong>Apply the declared quality gates</strong><span>Pass every required gate to qualify</span></div>
+<div class="flow-branches"><div><strong>PASS → L4</strong><span>Measure qualified performance.<br>Rank by goodput.</span></div><div><strong>FAIL / INCONCLUSIVE</strong><span>Retain the evidence.<br>Exclude from qualified ranking.</span></div></div>
+<figcaption id="flow-diagram-caption">The reference supplies quality evidence. Measure serving performance on the candidate recipe; SSD-reference speed is not its performance baseline. Recheck quality under the load being qualified.</figcaption>
+</figure>
 <div class="layer"><span class="layer-tag">L1</span><div><h3>4.1 Numerical fidelity</h3><p>Did the probability distribution change?</p></div></div>
 <p>Start below the logits: compare kernel and layer outputs using RMS, maximum absolute error, and relative error with a defined denominator floor. Include extreme values, noncontiguous layouts where supported, odd shapes, and relevant context/batch sizes. Locate the first divergent layer before interpreting end-to-end quality. Tail error is a diagnostic signal, not by itself proof of a user-visible failure.</p>
 <p>Teacher-force identical held-out token sequences into both systems: each scored position must have exactly the same prefix. Compare at temperature 1 before sampling filters. Align vocabulary IDs, positions, masks, and normalization; full-vocabulary KL is invalid when tokenization differs. Include natural text, code, and application examples, plus response positions on frozen reference-generated trajectories. Analyze these strata separately.</p>
@@ -130,6 +151,27 @@
 <section id="decision"><div class="section-number">05 / ACCEPTANCE, NOT IMPRESSION</div><h2>5. A defensible decision</h2>
 <p>Failure to detect a drop does not establish preservation. Use a <strong>paired non-inferiority test</strong>: decide in advance how much degradation is tolerable, then ask whether the uncertainty interval excludes a larger loss. Apply this per required task family and deployment slice; do not let improvements in one family compensate for a regression in another.</p>
 <p>Let <code>dᵢ = candidate_correctᵢ − reference_correctᵢ</code>, so each paired observation is −1, 0, or +1. The mean <code>Δ</code> is the score difference. For a preregistered absolute margin <code>δ</code>, the quality gate passes only if a one-sided 95% lower confidence bound for Δ is above <code>−δ</code>. Report the point estimate and interval in percentage points.</p>
+
+<figure class="method-diagram confidence-diagram">
+<div class="figure-label">READING THE QUALITY BOUND</div>
+<svg viewBox="0 0 400 320" role="img" aria-labelledby="confidence-title confidence-desc" xmlns="http://www.w3.org/2000/svg">
+<title id="confidence-title">Pass, fail, and inconclusive relative to the allowed loss</title>
+<desc id="confidence-desc">A vertical boundary represents minus delta, the maximum allowed loss. A pass interval is wholly to its right. A fail interval is wholly to its left. An inconclusive interval crosses it. Other required gates must also pass.</desc>
+<g font-family="system-ui, sans-serif" font-size="14" fill="#252d29">
+<path d="M200 35V250" stroke="#626a62" stroke-width="1.5" stroke-dasharray="5 5"/>
+<text x="22" y="38" font-weight="700" fill="#436750">PASS</text>
+<path d="M240 65H355M240 57V73M355 57V73" stroke="#436750" stroke-width="3"/><circle cx="297" cy="65" r="5" fill="#436750"/>
+<text x="22" y="108" font-weight="700" fill="#94694c">FAIL</text>
+<path d="M55 135H145M55 127V143M145 127V143" stroke="#94694c" stroke-width="3"/><circle cx="100" cy="135" r="5" fill="#94694c"/>
+<text x="22" y="178" font-weight="700" fill="#77662e">INCONCLUSIVE</text>
+<path d="M155 205H285M155 197V213M285 197V213" stroke="#998647" stroke-width="3"/><circle cx="220" cy="205" r="5" fill="#998647"/>
+<path d="M30 250H375M368 246L375 250L368 254" fill="none" stroke="#626a62"/>
+<text x="200" y="273" text-anchor="middle" font-weight="700">−δ</text>
+<text x="200" y="294" text-anchor="middle" font-size="12">Allowed-loss boundary</text>
+<text x="30" y="314" font-size="12">Larger loss</text><text x="375" y="314" text-anchor="end" font-size="12">Better preservation →</text>
+</g></svg>
+<figcaption>Conceptual intervals, not measured results; positions are not to scale. A pass needs its lower bound above −δ <em>and</em> every other required gate satisfied. An interval touching the boundary remains inconclusive.</figcaption>
+</figure>
 <div class="decision-grid"><div><strong>PASS</strong><p>Lower bound &gt; −δ, retention gate and application floors met, and correctness gates clear.</p></div><div><strong>FAIL</strong><p>Upper bound &lt; −δ, or a declared critical correctness gate fails.</p></div><div><strong>INCONCLUSIVE</strong><p>The interval crosses the boundary. Collect more evidence; do not qualify the speed claim.</p></div></div>
 <p>For a three-way decision, compute both one-sided 95% bounds (equivalently, the endpoints of an equal-tailed 90% two-sided interval). Prefer a validated paired-binomial score or exact method for binary outcomes, especially with few discordant pairs. Tango’s paired-proportion score interval is one established option; validate boundary cases in the implementation. <a href="https://pubmed.ncbi.nlm.nih.gov/9595618/">[11]</a> A paired prompt-level bootstrap is useful for nonbinary metrics and adequately populated samples, but a naive bootstrap collapses when all pairs agree. It must not certify zero uncertainty in that case. Never treat correlated tokens, instructions within a prompt, or multiple samples of one question as independent observations.</p>
 <p>A simple conservative fallback is to bound harmful flips alone. If <code>r</code> is the fraction of all items that change from correct to incorrect, then <code>Δ ≥ −r</code>. An exact one-sided binomial upper bound for r therefore supplies a conservative lower bound for Δ, ignoring beneficial flips. For zero harmful flips in n independent prompts, its 95% upper bound is <code>1 − 0.05^(1/n)</code>, approximately <code>3/n</code>. With 300 items and no harmful flips, the bound is still about 1%; zero observed losses is not proof of zero risk.</p>
@@ -169,7 +211,7 @@
 <li><strong>Decision table:</strong> one row per recipe revision and required slice, with pass/fail/inconclusive/unmeasured status. Show raw speed for failures only as clearly unqualified results.</li></ul>
 <p>Plot quality-qualified goodput against memory or latency, retaining only points that pass the required gates. Show accuracy deltas and harmful-flip rates alongside the plot. If one candidate is faster but uses more memory, present the trade-off rather than hiding it inside a weighted “overall score.”</p>
 <div class="closing"><p>The optimization target is not the fastest stream of tokens. It is <em>the most useful work this machine can deliver within a declared quality and latency budget.</em></p><p>On one DGX Spark, that is measurable—if the reference, the workload, the uncertainty, and the limits of the claim are part of the result.</p></div>
-<p class="status-note"><strong>Revision 1.9:</strong> organized Section 3 into versioned reference, recipe, environment, and benchmark records. Every result requires a runnable benchmark package; added a command wrapper and package contract.</p>
+<p class="status-note"><strong>Revision 1.10:</strong> added diagrams for the four-part test record, evaluation flow, and quality-bound decision.</p>
 <p class="status-note"><strong>Publication status:</strong> methodology proposal. No DGX Spark experiments were performed for this article, no acceptance thresholds have been empirically calibrated, and no performance gains are claimed. An SSD-offload reference utility and a benchmark-command wrapper are included. A runnable benchmark package must accompany each future result; experiments and worked examples are deferred.</p>
 </section>
 <section id="sources" class="sources"><div class="section-number">READING & REPRODUCIBILITY</div><h2>8. Sources & further reading</h2><p>Sources consulted November 3, 2026. Living repositories and policies can change; pin their commit IDs in an actual experiment. Links below support the established practices; the SWS protocol and example gates are the proposal of this article.</p>

@@ -12,7 +12,7 @@ The board is intentionally empty. It will contain only recipes we test and verif
 
 ## Status
 
-Methodology proposal v1.9, November 3, 2026. No hardware benchmark results are claimed. Suggested thresholds and budgets are explicitly illustrative. This repository contains the article, a reference utility, and a benchmark-command wrapper. Actual benchmark packages will accompany future measured results.
+Methodology proposal v1.10, November 3, 2026. No hardware benchmark results are claimed. Suggested thresholds and budgets are explicitly illustrative. This repository contains the article, a reference utility, and a benchmark-command wrapper. Actual benchmark packages will accompany future measured results.
 
 ## Edit and preview
 
@@ -35,7 +35,7 @@ Open http://localhost:8000. Google Fonts are optional; the page uses local syste
 
 Select **Settings → Pages → Source → GitHub Actions** once. Pushing article changes to `main` runs the publishing workflow. The deployed artifact contains only `docs/`.
 
-## Revision 1.9
+## Revision 1.10
 
 Defines the four versioned records required for each result: reference, supplied recipe, environment (including driver version), and benchmark. Each future result must publish a runnable benchmark package and evidence so others can verify it. Experiments and worked examples remain deferred.
 
