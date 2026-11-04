@@ -12,7 +12,7 @@ The board is intentionally empty. It will contain only recipes we test and verif
 
 ## Status
 
-**Funding:** We are preparing GitHub Sponsors support for benchmark maintenance and independent testing. Sponsorship is not yet live. See [the funding plan and independence policy](SPONSORSHIP.md).
+**Support this project:** [Sponsor Yuan Lin on GitHub Sponsors](https://github.com/sponsors/yuanlin2004) to help fund benchmark maintenance and independent testing. See [the funding plan and independence policy](SPONSORSHIP.md).
 
 Methodology proposal v1.12, November 3, 2026. No hardware benchmark results are claimed. Suggested thresholds and budgets are explicitly illustrative. This repository contains the article, a reference utility, and a benchmark-command wrapper. Actual benchmark packages will accompany future measured results.
 

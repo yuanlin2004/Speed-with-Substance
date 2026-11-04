@@ -1,8 +1,8 @@
 # Support Speed with Substance
 
-We are preparing to accept support through GitHub Sponsors. Sponsorship is not yet live.
+[Sponsor Yuan Lin on GitHub Sponsors](https://github.com/sponsors/yuanlin2004) to support Speed with Substance.
 
-## Profile copy
+## About the project
 
 I'm Yuan Lin, the maintainer of Speed with Substance: an open project for measuring both the quality and speed of LLM inference recipes.
 
@@ -22,13 +22,6 @@ The project currently contains a methodology proposal, a reference utility, a be
 - Financial sponsors and donated or loaned hardware will be disclosed, subject to sponsors' privacy preferences. Relevant conflicts of interest will be disclosed with results.
 - Supporters may suggest testing priorities. The published benchmark and evaluation rules govern the results; sponsorship provides no editorial veto.
 
-## Activation checklist
+## Current scope
 
-1. Enroll the `yuanlin2004` account at https://github.com/sponsors and complete GitHub's profile, payout, tax, and account-security requirements.
-2. Use the profile copy above and choose sponsorship amounts. Start with simple support tiers without additional service or delivery commitments.
-3. Submit the application for GitHub's approval and publish the Sponsors profile when eligible.
-4. Verify that https://github.com/sponsors/yuanlin2004 opens the sponsorship page, then replace the pending notice here and add live support links to the article and results board.
-
-The repository's `.github/FUNDING.yml` is prepared for this account. This configuration does not enroll the account or activate payments.
-
-Experiments remain on hold. Setting up sponsorship does not start testing or commit funds to hardware purchases.
+Experiments remain on hold. Sponsorship supports development and maintenance; it does not change the current testing schedule or commit funds to hardware purchases. Multi-node testing is a future extension, not part of the current single-Spark protocol.
