@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Results board — Speed with Substance</title>
+<meta name="description" content="Our own tested LLM inference configurations on one DGX Spark. Quality gates first, then rank by goodput. No results published yet.">
+<meta name="theme-color" content="#f6f3eb">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="board-page">
+<a class="skip" href="#results">Skip to results</a>
+<header class="masthead"><a class="brand" href="./">S<span>/</span>S <span class="brand-name">SPEED WITH SUBSTANCE</span></a><nav class="site-nav" aria-label="Main navigation"><a href="./">Methodology</a><a href="results.html" aria-current="page">Results board</a><a href="https://github.com/yuanlin2004/Speed-with-Substance">Repository ↗</a></nav></header>
+<main id="results" class="board-main">
+<section class="board-intro">
+<div class="eyebrow">RESULTS BOARD <span>ONE DGX SPARK</span></div>
+<h1>Quality first.<br><em>Then the ranking.</em></h1>
+<p class="dek">Our own tests of LLM inference configurations on a single DGX Spark. Passing configurations will be ranked by the useful work they deliver within a declared latency budget.</p>
+<div class="board-policy"><span class="label">OUR PUBLICATION RULE</span><p>We publish configurations we have run and verified ourselves, with the evidence needed to inspect the result. Every entry must identify its reference, workload, quality decision, and measured performance.</p></div>
+</section>
+<section class="board-results" aria-labelledby="results-heading">
+<div class="board-section-head"><div><span class="label">TESTED CONFIGURATIONS</span><h2 id="results-heading">Results</h2></div><span class="board-count">0 published</span></div>
+<div class="board-empty"><span class="empty-mark" aria-hidden="true">—</span><h3>No tested results published yet.</h3><p>The board is ready. Experiments are currently on hold; entries will appear after we complete and verify our runs.</p><a class="board-link" href="./#decision">Read the quality acceptance rules ↗</a></div>
+<p class="board-caption">Each future entry will show the following evidence. There are no benchmark measurements or sample results on this page.</p>
+<div class="table-wrap"><table class="board-table"><caption>Results record</caption><thead><tr><th scope="col">Configuration</th><th scope="col">Quality decision</th><th scope="col">Goodput</th><th scope="col">Speed & latency</th><th scope="col">Evidence</th></tr></thead><tbody><tr><td colspan="5" class="empty-row">No entries available.</td></tr></tbody></table></div>
+</section>
+<section class="board-guide" aria-labelledby="reading-heading"><div class="section-number">HOW TO READ THE BOARD</div><h2 id="reading-heading">A rank has a scope.</h2>
+<div class="board-guide-grid"><div><h3>Compare matching workloads</h3><p>Rankings apply within the same model and checkpoint, task suite, context and load profile, and latency limits. Each record will identify quantization, runtime, KV precision, memory use, and actual batching where available.</p></div><div><h3>Qualify before ranking</h3><p>Only configurations that pass the declared quality and serving-correctness gates qualify for ranking. Failures and inconclusive decisions will remain visible with their evidence. A matched-quantized reference establishes a different claim from preservation against original precision.</p></div><div><h3>Count useful work</h3><p><strong>Goodput</strong> is correct, valid responses meeting the declared service-level objective per second. We will also report raw tok/s and measured ms/token, with aggregate throughput distinguished from per-stream latency.</p></div><div><h3>Inspect the evidence</h3><p>Each entry will link to a frozen manifest, commands, paired outcomes, confidence bounds, timing records, errors, and evaluation duration. Any external figures used for context will be labeled <strong>reported</strong> and excluded from our rankings.</p></div></div>
+<p class="board-bottom-link"><a href="./">Explore the full methodology ↗</a></p>
+</section>
+</main>
+<footer><a class="brand" href="./" aria-label="Speed with Substance home">S<span>/</span>S</a><p>Speed with Substance · Quality before speed</p><a href="https://github.com/yuanlin2004/Speed-with-Substance">Source & discussion ↗</a></footer>
+</body></html>

@@ -6,6 +6,10 @@ A research-backed article proposing a quality-first evaluation protocol for quan
 
 The proposal combines numerical fidelity, paired task outcomes, context and serving correctness, and quality-qualified performance. It explains the established MLPerf precedent, the limits of perplexity and aggregate accuracy, statistical non-inferiority gates, and a practical single-machine runbook.
 
+**Results board:** https://yuanlin2004.github.io/Speed-with-Substance/results.html
+
+The board is intentionally empty. It will contain only configurations we test and verify ourselves; experiments remain on hold. There is no submission flow.
+
 ## Status
 
 Methodology proposal v1.3, November 3, 2026. No hardware benchmark results are claimed. Suggested thresholds and budgets are explicitly illustrative. This repository contains the article, not an implemented evaluation harness.
@@ -15,6 +19,7 @@ Methodology proposal v1.3, November 3, 2026. No hardware benchmark results are c
 The site is dependency-free static HTML and CSS:
 
 - `docs/index.html`: article and primary-source references.
+- `docs/results.html`: empty curated results board and publication policy.
 - `docs/assets/style.css`: responsive editorial design and print styles.
 - `.github/workflows/pages.yml`: GitHub Pages deployment on changes to `main`.
 

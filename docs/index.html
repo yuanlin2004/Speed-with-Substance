@@ -10,7 +10,7 @@
 </head>
 <body>
 <a class="skip" href="#article">Skip to article</a>
-<header class="masthead"><a class="brand" href="./">S<span>/</span>S <span class="brand-name">SPEED WITH SUBSTANCE</span></a><a href="https://github.com/yuanlin2004/Speed-with-Substance">View repository ↗</a></header>
+<header class="masthead"><a class="brand" href="./">S<span>/</span>S <span class="brand-name">SPEED WITH SUBSTANCE</span></a><nav class="site-nav" aria-label="Main navigation"><a href="./" aria-current="page">Methodology</a><a href="results.html">Results board</a><a href="https://github.com/yuanlin2004/Speed-with-Substance">Repository ↗</a></nav></header>
 <main id="article">
 <section class="hero">
 <div class="eyebrow">RESEARCH & PROPOSAL <span>01 / INFERENCE SYSTEMS</span></div>
@@ -21,7 +21,7 @@
 <div class="thesis"><span class="label">TL;DR</span><ol><li>Qualify quality first; rank passing configurations by goodput.</li><li>Goodput means correct, valid responses meeting latency limits per second.</li><li>Compare against a frozen original-precision reference, SSD-offloaded if necessary.</li><li>Test the model, context, batch composition, and load you intend to serve.</li><li>Inconclusive ≠ pass. Report uncertainty and the time required to obtain it.</li></ol></div>
 </section>
 <div class="article-layout">
-<aside><nav aria-label="Article sections"><span class="label">IN THIS ARTICLE</span><a href="#standard">1. The closest gold standard</a><a href="#spark">2. The one-Spark scope</a><a href="#reference">3. Define the reference</a><a href="#layers">4. Four layers of evidence</a><a href="#decision">5. A defensible decision</a><a href="#runbook">6. A practical runbook</a><a href="#report">7. Publish the evidence</a><a href="#sources">8. Sources & further reading</a></nav><p class="aside-note">A proposed protocol, not a new leaderboard.<br><br>Scope: text LLM inference on one machine.</p></aside>
+<aside><nav aria-label="Article sections"><span class="label">IN THIS ARTICLE</span><a href="#standard">1. The closest gold standard</a><a href="#spark">2. The one-Spark scope</a><a href="#reference">3. Define the reference</a><a href="#layers">4. Four layers of evidence</a><a href="#decision">5. A defensible decision</a><a href="#runbook">6. A practical runbook</a><a href="#report">7. Publish the evidence</a><a href="#sources">8. Sources & further reading</a></nav><p class="aside-note">Scope: text LLM inference on one machine.<br><br><a href="results.html">See our results board ↗</a></p></aside>
 <article>
 <section class="opening"><p class="lead">An inference stack can produce more tokens per second while becoming a worse system. It may lose useful answers, break structured output, truncate long prompts, or fail only when requests share a batch. A throughput chart does not tell us which of these happened.</p>
 <p>For optimization work, the central question is comparative: <strong>does this specific change preserve the behavior we need from this specific model?</strong> For deployment, there is a second question: is the preserved behavior good enough for the application? Matching a weak reference answers only the first.</p>
