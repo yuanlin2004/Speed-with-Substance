@@ -12,7 +12,7 @@ The board is intentionally empty. It will contain only recipes we test and verif
 
 ## Status
 
-Methodology proposal v1.4, November 3, 2026. No hardware benchmark results are claimed. Suggested thresholds and budgets are explicitly illustrative. This repository contains the article, not an implemented evaluation harness.
+Methodology proposal v1.5, November 3, 2026. No hardware benchmark results are claimed. Suggested thresholds and budgets are explicitly illustrative. This repository contains the article, not an implemented evaluation harness.
 
 ## Edit and preview
 
@@ -35,9 +35,9 @@ Open http://localhost:8000. Google Fonts are optional; the page uses local syste
 
 Select **Settings → Pages → Source → GitHub Actions** once. Pushing article changes to `main` runs the publishing workflow. The deployed artifact contains only `docs/`.
 
-## Revision 1.4
+## Revision 1.5
 
-Defines the complete inference recipe as the unit under test, makes original-precision target-engine control optional, and records immutable recipe revisions. Includes models from 7B–14B through 27B–120B+ where the workload fits. Experiments and worked examples remain deferred.
+Compares the complete candidate recipe directly against the original-precision reference. Optional engine and matched quantized controls have been removed. Experiments and worked examples remain deferred.
 
 See `tools/reference.py` and `tools/README.md` for the original-precision baseline utility.
 
